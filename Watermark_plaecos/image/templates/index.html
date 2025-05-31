@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DCT Watermark Web App</title>
+</head>
+<body>
+  <h2>🔐 Add Watermark</h2>
+  <form method="POST" enctype="multipart/form-data">
+    <input type="file" name="image" required><br><br>
+    <label>Watermark Type:</label><br>
+    <input type="radio" name="type" value="invisible" checked> Invisible (DCT)<br>
+    <input type="radio" name="type" value="visible"> Visible (Logo)<br>
+    <input type="radio" name="type" value="both"> Both<br><br>
+
+    <label>Hidden Message (if using DCT):</label><br>
+    <input type="text" name="watermark_text"><br><br>
+
+    <input type="submit" value="Apply Watermark">
+  </form>
+
+  {% if result_img %}
+    <h3>✅ Watermarked Image:</h3>
+    <img src="{{ result_img }}" width="400"><br>
+    <a href="{{ result_img }}" download>Download Image</a>
+  {% endif %}
+
+  <hr>
+
+  <h2>🔍 Extract Hidden Watermark</h2>
+  <form method="POST" action="/extract" enctype="multipart/form-data">
+    <input type="file" name="extract_image" required><br><br>
+    <label>Watermark Length (in characters):</label>
+    <input type="number" name="length" required><br><br>
+    <input type="submit" value="Extract Hidden Message">
+  </form>
+
+  {% if extracted %}
+    <h3>🔓 Hidden Watermark Extracted:</h3>
+    <p>{{ extracted }}</p>
+  {% endif %}
+</body>
+</html>
